@@ -56,16 +56,16 @@ void Game::UpdateModel()
 	if (wnd.kbd.KeyIsPressed(VK_RIGHT))
 		delta_loc = {  1,  0 };
 
-	// Prevent the snake from running backward
-	if (prev_delta_loc.x * delta_loc.x == -1 || prev_delta_loc.y * delta_loc.y == -1)
-		delta_loc = prev_delta_loc;
-	prev_delta_loc = delta_loc;
-
 	// Adjust the frame rate
 	frameCount++;
 	if (frameCount == framePerMove)
 	{
 		frameCount = 0;
+
+		// Prevent the snake from running backward
+		if (prev_delta_loc.x * delta_loc.x == -1 || prev_delta_loc.y * delta_loc.y == -1)
+			delta_loc = prev_delta_loc;
+		prev_delta_loc = delta_loc;
 
 		if (snake.Eat(apple, delta_loc))
 		{

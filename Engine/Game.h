@@ -54,7 +54,7 @@ private:
 	Board brd;
 	Fruit apple;
 	Snake snake;
-	static constexpr int framePerMove = 3;
+	static constexpr int framePerMove = 7;
 	int frameCount = 0;
 	Location delta_loc = { 0, 0 };
 	Location prev_delta_loc = delta_loc;
