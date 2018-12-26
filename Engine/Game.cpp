@@ -33,8 +33,7 @@ Game::Game( MainWindow& wnd )
 	xDist(0, 39),
 	yDist(0, 29)	
 {
-	//apple.Init({ xDist(rng), yDist(rng) });
-	apple.Init({ 0, 14});
+	apple.Init({ xDist(rng), yDist(rng) });
 }
 
 void Game::Go()
