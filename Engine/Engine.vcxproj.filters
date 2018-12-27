@@ -60,6 +60,9 @@
     <ClInclude Include="Fruit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Special.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXErr.cpp">
@@ -90,6 +93,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Fruit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Special.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

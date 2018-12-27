@@ -70,6 +70,8 @@ void Game::UpdateModel()
 		if (snake.Eat(apple, delta_loc))
 		{
 			snake.Grow();
+			walls.SpawnNewWall({ xDist(rng), yDist(rng) });
+			score++;
 			do
 			{
 				apple.Respawn({ xDist(rng), yDist(rng) });
@@ -97,6 +99,7 @@ void Game::ComposeFrame()
 		fillScreen(200, 200, 200);
 		snake.Draw(brd);
 		apple.Draw(brd);
+		walls.Draw(brd);
 	}
 }
 

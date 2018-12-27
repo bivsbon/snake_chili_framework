@@ -26,6 +26,7 @@
 #include "Board.h"
 #include "Snake.h"
 #include "Fruit.h"
+#include "Special.h"
 #include <random>
 
 class Game
@@ -59,5 +60,7 @@ private:
 	Location delta_loc = { 0, 0 };
 	Location prev_delta_loc = delta_loc;
 	bool gameOver = false;
+	int score = 0;
+	Special walls;
 	/********************************/
 };
