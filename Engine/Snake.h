@@ -1,6 +1,7 @@
 #pragma once
 #include "Board.h"
 #include "Fruit.h"
+#include "Special.h"
 
 class Snake
 {
@@ -27,6 +28,7 @@ public:
 	bool IsEatingWalls(const Board& brd) const;
 	bool IsEatingItself();
 	bool Eat(const Fruit& apple,const Location& delta_loc) const;
+	bool EatSpecial(const Special& wall,const Location& delta_loc) const;
 	bool FruitSpawnOn(const Fruit& apple) const;
 	Location GetNextLocation(const Location& delta_loc) const;
 

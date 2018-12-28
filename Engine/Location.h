@@ -12,7 +12,7 @@ struct Location
 		x *= val.x;
 		y *= val.y;
 	}
-	bool Equal(const Location& val)
+	bool operator==(const Location& val) const
 	{
 		if (x == val.x && y == val.y)
 			return true;

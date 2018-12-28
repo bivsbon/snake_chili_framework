@@ -19,3 +19,17 @@ Location Fruit::GetLocation() const
 {
 	return loc;
 }
+
+bool Fruit::SpawnOnWalls(const Special & wall) const
+{
+	for (int i = 0; i < wall.GetNWalls(); i++)
+	{
+		if (GetLocation() == wall.GetLocation(i))
+		{
+			return true;
+		}
+		else
+			;
+	}
+	return false;
+}

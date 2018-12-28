@@ -14,9 +14,14 @@ void Special::Draw(Board& brd) const
 	}
 }
 
-bool Special::FoodSpawnOn(const Fruit & apple) const
+int Special::GetNWalls() const
 {
-	return false;
+	return nWalls;
+}
+
+Location Special::GetLocation(const int index) const
+{
+	return walls[index].GetLocation();
 }
 
 void Special::Wall::InitWall(const Location& in_loc)
@@ -28,4 +33,9 @@ void Special::Wall::InitWall(const Location& in_loc)
 void Special::Wall::Draw(Board& brd) const
 {
 	brd.DrawCell(loc, c);
+}
+
+Location Special::Wall::GetLocation() const
+{
+	return loc;
 }

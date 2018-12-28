@@ -45,7 +45,7 @@ bool Snake::IsEatingItself()
 {
 	for (int i = 1; i < nSegments; i++)
 	{
-		if (segments[0].GetLocation().Equal(segments[i].GetLocation()))
+		if (segments[0].GetLocation() == segments[i].GetLocation())
 			return true;
 	}
 	return false;
@@ -55,15 +55,14 @@ bool Snake::FruitSpawnOn(const Fruit& apple) const
 {
 	for (int i = 0; i < nSegments; i++)
 	{
-		if (segments[i].GetLocation().Equal(apple.GetLocation()))
+		if (segments[i].GetLocation() == apple.GetLocation())
 		{
 			return true;
 		}
 		else
-		{
-			return false;
-		}
+			;
 	}
+	return false;
 }
 
 Location Snake::GetNextLocation(const Location & delta_loc) const
@@ -71,6 +70,32 @@ Location Snake::GetNextLocation(const Location & delta_loc) const
 	Location l = segments[0].GetLocation();
 	l.Add(delta_loc);
 	return l;
+}
+
+bool Snake::Eat(const Fruit& apple,const Location& delta_loc) const
+{
+	if (GetNextLocation(delta_loc) == apple.GetLocation())
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool Snake::EatSpecial(const Special& wall, const Location & delta_loc) const
+{
+	for (int i = 0; i < wall.GetNWalls(); i++)
+	{
+		if (GetNextLocation(delta_loc) == wall.GetLocation(i))
+		{
+			return true;
+		}
+		else
+			;
+	}
+	return false;
 }
 
 void Snake::Segment::InitHead(const Location& in_loc)
@@ -102,16 +127,4 @@ void Snake::Segment::Draw(Board & brd) const
 Location Snake::Segment::GetLocation() const
 {
 	return loc;
-}
-
-bool Snake::Eat(const Fruit& apple,const Location& delta_loc) const
-{
-	if (GetNextLocation(delta_loc).Equal(apple.GetLocation()))
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
 }

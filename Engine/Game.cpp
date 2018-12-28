@@ -73,15 +73,22 @@ void Game::UpdateModel()
 			walls.SpawnNewWall({ xDist(rng), yDist(rng) });
 			score++;
 			do
-			{
+			{ 
 				apple.Respawn({ xDist(rng), yDist(rng) });
-			} while (snake.FruitSpawnOn(apple));
+			} while (snake.FruitSpawnOn(apple) || apple.SpawnOnWalls(walls));
 		}
+
+		if (snake.EatSpecial(walls, delta_loc))
+		{
+			gameOver = true;
+		}
+
 		snake.MoveBy(delta_loc);
 	}
 
 	// Gameover scenarios
-	if (snake.IsEatingWalls(brd) || snake.IsEatingItself())
+	if (snake.IsEatingWalls(brd) || 
+		snake.IsEatingItself())
 	{
 		gameOver = true;
 	}
