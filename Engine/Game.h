@@ -26,7 +26,7 @@
 #include "Board.h"
 #include "Snake.h"
 #include "Fruit.h"
-#include "Special.h"
+#include "Walls.h"
 #include <random>
 #include "FrameTimer.h"
 
@@ -58,7 +58,7 @@ private:
 	Board brd;
 	Fruit apple;
 	Snake snake;
-	Special walls;
+	Walls walls;
 
 	static constexpr float secondPerMove = 0.1f;
 	float secondCount = 0.0f;

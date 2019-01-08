@@ -84,7 +84,7 @@ bool Snake::Eat(const Fruit& apple,const Location& delta_loc) const
 	}
 }
 
-bool Snake::EatSpecial(const Special& wall, const Location & delta_loc) const
+bool Snake::EatWalls(const Walls& wall, const Location & delta_loc) const
 {
 	for (int i = 0; i < wall.GetNWalls(); i++)
 	{

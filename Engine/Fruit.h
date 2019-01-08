@@ -1,6 +1,6 @@
 #pragma once
 #include "Board.h"
-#include "Special.h"
+#include "Walls.h"
 
 class Fruit
 {
@@ -9,7 +9,7 @@ public:
 	void Respawn(const Location& loc);
 	void Draw(Board& brd);
 	Location GetLocation() const;
-	bool SpawnOnWalls(const Special& wall) const;
+	bool SpawnOnWalls(const Walls& wall) const;
 private:
 	Location loc;
 	static constexpr Color c = Colors::Red;

@@ -20,7 +20,7 @@ Location Fruit::GetLocation() const
 	return loc;
 }
 
-bool Fruit::SpawnOnWalls(const Special & wall) const
+bool Fruit::SpawnOnWalls(const Walls& wall) const
 {
 	for (int i = 0; i < wall.GetNWalls(); i++)
 	{

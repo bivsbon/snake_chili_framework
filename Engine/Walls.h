@@ -1,7 +1,7 @@
 #pragma once
 #include "Board.h"
 
-class Special
+class Walls
 {
 private:
 	class Wall

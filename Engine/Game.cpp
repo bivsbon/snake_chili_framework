@@ -57,7 +57,7 @@ void Game::UpdateModel()
 		delta_loc = {  1,  0 };
 
 	// Adjust the frame rate
-	float dt = ft.Mark();
+	const float dt = ft.Mark();
 	secondCount += dt;
 	if (secondCount >= secondPerMove)
 	{
@@ -79,7 +79,7 @@ void Game::UpdateModel()
 			} while (snake.FruitSpawnOn(apple) || apple.SpawnOnWalls(walls));
 		}
 
-		if (snake.EatSpecial(walls, delta_loc))
+		if (snake.EatWalls(walls, delta_loc))
 		{
 			gameOver = true;
 		}
