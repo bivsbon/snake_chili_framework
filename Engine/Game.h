@@ -56,6 +56,7 @@ private:
 	std::mt19937 rng;
 	std::uniform_int_distribution<int> xDist;
 	std::uniform_int_distribution<int> yDist;
+	std::uniform_int_distribution<int> freqDist;
 
 	Board brd;
 	Fruit apple;
@@ -73,10 +74,15 @@ private:
 	int prevScore = 0;
 	float speedUpTimer= 0.0f;
 	bool speedUpMode = false;
+	bool pauseScreen = false;
+	int fruitPerCucumber = 5;
+	float pauseCounter = 0.0f;
+	static constexpr float pauseDuration = 3.25f;
 
-	Sound nomSound;
+	Sound nom;
 	Sound background;
 	Sound dead;
+	Sound speedup;
 	float loopSoundCounter = 0.0f;
 	static constexpr float soundLength = 249.0f;
 	/********************************/

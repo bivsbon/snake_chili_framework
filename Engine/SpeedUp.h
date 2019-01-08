@@ -17,5 +17,5 @@ private:
 	bool exist = false;
 	Location loc;
 	static constexpr Color c = Colors::Green;
-	float duration = 5.0f;
+	float duration = 35.0f;
 };
