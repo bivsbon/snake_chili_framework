@@ -29,6 +29,7 @@
 #include "Walls.h"
 #include <random>
 #include "FrameTimer.h"
+#include "Sound.h"
 
 class Game
 {
@@ -66,5 +67,8 @@ private:
 	Location prev_delta_loc = delta_loc;
 	bool gameOver = false;
 	int score = 0;
+
+	Sound nomSound;
+	Sound soundtrack;
 	/********************************/
 };

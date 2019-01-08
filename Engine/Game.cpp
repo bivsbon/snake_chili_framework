@@ -31,7 +31,9 @@ Game::Game( MainWindow& wnd )
 	rng(rd()),
 	snake({1, 1}),
 	xDist(0, 39),
-	yDist(0, 29)	
+	yDist(0, 29),
+	nomSound(L"Sounds\\nom.wav"),
+	soundtrack(L"Sounds\\sound01.wav")
 {
 	apple.Init({ xDist(rng), yDist(rng) });
 }
@@ -46,6 +48,7 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	soundtrack.Play();
 	// Keyboard input
 	if (wnd.kbd.KeyIsPressed(VK_UP))
 		delta_loc = {  0, -1 };
@@ -70,6 +73,7 @@ void Game::UpdateModel()
 
 		if (snake.Eat(apple, delta_loc))
 		{
+			nomSound.Play();
 			snake.Grow();
 			walls.SpawnNewWall({ xDist(rng), yDist(rng) });
 			score++;
