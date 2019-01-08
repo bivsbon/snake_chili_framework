@@ -33,9 +33,11 @@ Game::Game( MainWindow& wnd )
 	xDist(0, 39),
 	yDist(0, 29),
 	nomSound(L"Sounds\\nom.wav"),
-	soundtrack(L"Sounds\\sound01.wav")
+	background(L"Sounds\\soundtrack.wav"),
+	dead(L"Sounds\\dead.wav")
 {
 	apple.Init({ xDist(rng), yDist(rng) });
+	background.Play();
 }
 
 void Game::Go()
@@ -48,7 +50,6 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	soundtrack.Play();
 	// Keyboard input
 	if (wnd.kbd.KeyIsPressed(VK_UP))
 		delta_loc = {  0, -1 };
@@ -71,9 +72,10 @@ void Game::UpdateModel()
 			delta_loc = prev_delta_loc;
 		prev_delta_loc = delta_loc;
 
+		// Eating fruit
 		if (snake.Eat(apple, delta_loc))
 		{
-			nomSound.Play();
+			nomSound.Play(); // Eating sound
 			snake.Grow();
 			walls.SpawnNewWall({ xDist(rng), yDist(rng) });
 			score++;
@@ -97,6 +99,25 @@ void Game::UpdateModel()
 	{
 		gameOver = true;
 	}
+
+	//Background music
+	loopSoundCounter += dt;
+	if (loopSoundCounter >= soundLength)
+	{
+		background.Play();
+		loopSoundCounter = 0.0f;
+	}
+
+	// Sound effects when dead
+	if (gameOver == true)
+	{
+		background.StopOne();
+	}
+
+	if (prevGameOver != gameOver)
+		dead.Play();
+
+	prevGameOver = gameOver;
 }
 
 void Game::ComposeFrame()

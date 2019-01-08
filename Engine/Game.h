@@ -66,9 +66,13 @@ private:
 	Location delta_loc = { 0, 0 };
 	Location prev_delta_loc = delta_loc;
 	bool gameOver = false;
+	bool prevGameOver = false;
 	int score = 0;
 
 	Sound nomSound;
-	Sound soundtrack;
+	Sound background;
+	Sound dead;
+	float loopSoundCounter = 0.0f;
+	static constexpr float soundLength = 249.0f;
 	/********************************/
 };
