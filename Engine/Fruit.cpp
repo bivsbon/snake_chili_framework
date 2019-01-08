@@ -10,7 +10,7 @@ void Fruit::Respawn(const Location& new_loc)
 	loc = new_loc;
 }
 
-void Fruit::Draw(Board & brd)
+void Fruit::Draw(Board & brd) const
 {
 	brd.DrawCell(loc, c);
 }

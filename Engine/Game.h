@@ -30,6 +30,7 @@
 #include <random>
 #include "FrameTimer.h"
 #include "Sound.h"
+#include "SpeedUp.h"
 
 class Game
 {
@@ -60,14 +61,17 @@ private:
 	Fruit apple;
 	Snake snake;
 	Walls walls;
+	SpeedUp cucumber;
 
-	static constexpr float secondPerMove = 0.1f;
+	float secondPerMove = 0.1f;
 	float secondCount = 0.0f;
 	Location delta_loc = { 0, 0 };
 	Location prev_delta_loc = delta_loc;
 	bool gameOver = false;
 	bool prevGameOver = false;
 	int score = 0;
+	int prevScore = 0;
+	float speedUpTimer;
 
 	Sound nomSound;
 	Sound background;
