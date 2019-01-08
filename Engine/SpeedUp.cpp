@@ -43,4 +43,5 @@ bool SpeedUp::SpawnOnWalls(const Walls & wall) const
 void SpeedUp::Terminate()
 {
 	exist = false;
+	loc.x = -1; //Set it to be outside the screen
 }

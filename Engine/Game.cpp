@@ -100,17 +100,27 @@ void Game::UpdateModel()
 		{
 			cucumber.Terminate();
 			secondPerMove = 0.07f;
+			speedUpTimer = 0.0f;
+			speedUpMode = true;
 		}
 
 		snake.MoveBy(delta_loc);
 	}
 
 	// Speedup cucumber !!
-	if (score != 0 && score % 5 == 0 
-		&& prevScore != score && cucumber.IsExist() == false)
+	if (score && score % 5 == 0 
+		&& prevScore != score && !cucumber.IsExist())
 	{
 		cucumber.Spawn({ xDist(rng), yDist(rng) });
-		speedUpTimer = 0.0f;
+	}
+	if (speedUpMode)
+	{
+		speedUpTimer += dt;
+		if (speedUpTimer >= cucumber.GetDuration())
+		{
+			speedUpMode = false;
+			secondPerMove = 0.15f;
+		}
 	}
 	prevScore = score;
 
@@ -121,7 +131,7 @@ void Game::UpdateModel()
 		gameOver = true;
 	}
 
-	Background music
+	// Background music
 	loopSoundCounter += dt;
 	if (loopSoundCounter >= soundLength)
 	{
@@ -129,7 +139,7 @@ void Game::UpdateModel()
 		loopSoundCounter = 0.0f;
 	}
 
-	 Sound effects when dead
+	// Sound effects when dead
 	if (gameOver == true)
 	{
 		background.StopOne();

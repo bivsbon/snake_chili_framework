@@ -63,7 +63,7 @@ private:
 	Walls walls;
 	SpeedUp cucumber;
 
-	float secondPerMove = 0.1f;
+	float secondPerMove = 0.15f;
 	float secondCount = 0.0f;
 	Location delta_loc = { 0, 0 };
 	Location prev_delta_loc = delta_loc;
@@ -71,7 +71,8 @@ private:
 	bool prevGameOver = false;
 	int score = 0;
 	int prevScore = 0;
-	float speedUpTimer;
+	float speedUpTimer= 0.0f;
+	bool speedUpMode = false;
 
 	Sound nomSound;
 	Sound background;
