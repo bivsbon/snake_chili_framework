@@ -28,6 +28,7 @@
 #include "Fruit.h"
 #include "Special.h"
 #include <random>
+#include "FrameTimer.h"
 
 class Game
 {
@@ -48,19 +49,22 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
+	FrameTimer ft;
 	std::random_device rd;
 	std::mt19937 rng;
 	std::uniform_int_distribution<int> xDist;
 	std::uniform_int_distribution<int> yDist;
+
 	Board brd;
 	Fruit apple;
 	Snake snake;
-	static constexpr int framePerMove = 7;
-	int frameCount = 0;
+	Special walls;
+
+	static constexpr float secondPerMove = 0.1f;
+	float secondCount = 0.0f;
 	Location delta_loc = { 0, 0 };
 	Location prev_delta_loc = delta_loc;
 	bool gameOver = false;
 	int score = 0;
-	Special walls;
 	/********************************/
 };
