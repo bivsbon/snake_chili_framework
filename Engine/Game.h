@@ -26,8 +26,11 @@
 #include "Board.h"
 #include "Snake.h"
 #include "Fruit.h"
-#include "Special.h"
+#include "Walls.h"
 #include <random>
+#include "FrameTimer.h"
+#include "Sound.h"
+#include "SpeedUp.h"
 
 class Game
 {
@@ -48,19 +51,39 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
+	FrameTimer ft;
 	std::random_device rd;
 	std::mt19937 rng;
 	std::uniform_int_distribution<int> xDist;
 	std::uniform_int_distribution<int> yDist;
+	std::uniform_int_distribution<int> freqDist;
+
 	Board brd;
 	Fruit apple;
 	Snake snake;
-	static constexpr int framePerMove = 7;
-	int frameCount = 0;
+	Walls walls;
+	SpeedUp cucumber;
+
+	float secondPerMove = 0.15f;
+	float secondCount = 0.0f;
 	Location delta_loc = { 0, 0 };
 	Location prev_delta_loc = delta_loc;
 	bool gameOver = false;
+	bool prevGameOver = false;
 	int score = 0;
-	Special walls;
+	int prevScore = 0;
+	float speedUpTimer= 0.0f;
+	bool speedUpMode = false;
+	bool pauseScreen = false;
+	int fruitPerCucumber = 5;
+	float pauseCounter = 0.0f;
+	static constexpr float pauseDuration = 3.25f;
+
+	Sound nom;
+	Sound background;
+	Sound dead;
+	Sound speedup;
+	float loopSoundCounter = 0.0f;
+	static constexpr float soundLength = 249.0f;
 	/********************************/
 };

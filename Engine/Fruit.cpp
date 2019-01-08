@@ -10,7 +10,7 @@ void Fruit::Respawn(const Location& new_loc)
 	loc = new_loc;
 }
 
-void Fruit::Draw(Board & brd)
+void Fruit::Draw(Board & brd) const
 {
 	brd.DrawCell(loc, c);
 }
@@ -20,7 +20,7 @@ Location Fruit::GetLocation() const
 	return loc;
 }
 
-bool Fruit::SpawnOnWalls(const Special & wall) const
+bool Fruit::SpawnOnWalls(const Walls& wall) const
 {
 	for (int i = 0; i < wall.GetNWalls(); i++)
 	{

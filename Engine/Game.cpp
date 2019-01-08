@@ -31,9 +31,15 @@ Game::Game( MainWindow& wnd )
 	rng(rd()),
 	snake({1, 1}),
 	xDist(0, 39),
-	yDist(0, 29)	
+	yDist(0, 29),
+	freqDist(20, 30),
+	nom(L"Sounds\\nom.wav"),
+	background(L"Sounds\\soundtrack.wav"),
+	dead(L"Sounds\\oof.wav"),
+	speedup(L"Sounds\\aaah.wav")
 {
 	apple.Init({ xDist(rng), yDist(rng) });
+	background.Play();
 }
 
 void Game::Go()
@@ -46,51 +52,128 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	// Keyboard input
-	if (wnd.kbd.KeyIsPressed(VK_UP))
-		delta_loc = {  0, -1 };
-	if (wnd.kbd.KeyIsPressed(VK_DOWN))
-		delta_loc = {  0,  1 };
-	if (wnd.kbd.KeyIsPressed(VK_LEFT))
-		delta_loc = { -1,  0 };
-	if (wnd.kbd.KeyIsPressed(VK_RIGHT))
-		delta_loc = {  1,  0 };
-
-	// Adjust the frame rate
-	frameCount++;
-	if (frameCount == framePerMove)
+	if (!pauseScreen)
 	{
-		frameCount = 0;
+		// Keyboard input
+		if (wnd.kbd.KeyIsPressed(VK_UP))
+			delta_loc = {  0, -1 };
+		if (wnd.kbd.KeyIsPressed(VK_DOWN))
+			delta_loc = {  0,  1 };
+		if (wnd.kbd.KeyIsPressed(VK_LEFT))
+			delta_loc = { -1,  0 };
+		if (wnd.kbd.KeyIsPressed(VK_RIGHT))
+			delta_loc = {  1,  0 };
 
-		// Prevent the snake from running backward
-		if (prev_delta_loc.x * delta_loc.x == -1 || prev_delta_loc.y * delta_loc.y == -1)
-			delta_loc = prev_delta_loc;
-		prev_delta_loc = delta_loc;
-
-		if (snake.Eat(apple, delta_loc))
+		// Adjust the frame rate
+		const float dt = ft.Mark();
+		secondCount += dt;
+		if (secondCount >= secondPerMove)
 		{
-			snake.Grow();
-			walls.SpawnNewWall({ xDist(rng), yDist(rng) });
-			score++;
-			do
-			{ 
-				apple.Respawn({ xDist(rng), yDist(rng) });
-			} while (snake.FruitSpawnOn(apple) || apple.SpawnOnWalls(walls));
+			secondCount = 0;
+
+			// Prevent the snake from running backward
+			if (prev_delta_loc.x * delta_loc.x == -1 || prev_delta_loc.y * delta_loc.y == -1)
+				delta_loc = prev_delta_loc;
+			prev_delta_loc = delta_loc;
+
+			// Eating apple
+			if (snake.Eat(apple, delta_loc))
+			{
+				if (!speedUpMode)
+				{
+					nom.Play(); // Eating sound
+				}
+				snake.Grow();
+				score++;
+				if (score % 2 == 0)
+				{
+					walls.SpawnNewWall({ xDist(rng), yDist(rng) });
+				}
+				do
+				{ 
+					apple.Respawn({ xDist(rng), yDist(rng) });
+				} while (snake.FruitSpawnOn(apple) || apple.SpawnOnWalls(walls) 
+					  || apple.GetLocation() == cucumber.GetLocation()); // Respawn if overlaps with other things
+			}
+
+			// Going out the border -> dead
+			if (snake.EatWalls(walls, delta_loc))
+			{
+				gameOver = true;
+			}
+
+			// Eating cucumber
+			if (snake.EatSpeedUp(cucumber, delta_loc))
+			{
+				cucumber.Terminate();
+				secondPerMove = 0.07f;
+				speedUpTimer = 0.0f;
+				speedUpMode = true;
+				pauseScreen = true;
+				background.StopAll();
+				speedup.StopOne();
+				speedup.Play();
+			}
+
+			snake.MoveBy(delta_loc);
 		}
 
-		if (snake.EatSpecial(walls, delta_loc))
+		// Speedup cucumber !!
+		if (score && score == fruitPerCucumber 
+			&& prevScore != score && !cucumber.IsExist())
+		{
+			fruitPerCucumber = freqDist(rng) + score;
+			cucumber.Spawn({ xDist(rng), yDist(rng) });
+		}
+		if (speedUpMode)
+		{
+			speedUpTimer += dt;
+			if (speedUpTimer >= cucumber.GetDuration())
+			{
+				speedUpMode = false;
+				secondPerMove = 0.15f;
+				background.Play();
+				loopSoundCounter = 0.0f;
+			}
+		}
+		prevScore = score;
+
+		// Gameover scenarios
+		if (snake.IsEatingWalls(brd) || 
+			snake.IsEatingItself())
 		{
 			gameOver = true;
 		}
 
-		snake.MoveBy(delta_loc);
-	}
+		// Background music
+		loopSoundCounter += dt;
+		if (loopSoundCounter >= soundLength)
+		{
+			background.Play();
+			loopSoundCounter = 0.0f;
+		}
 
-	// Gameover scenarios
-	if (snake.IsEatingWalls(brd) || 
-		snake.IsEatingItself())
+		// Sound effects when dead
+		if (gameOver == true)
+		{
+			background.StopAll();
+			speedup.StopAll();
+		}
+
+		if (prevGameOver != gameOver)
+			dead.Play();
+
+		prevGameOver = gameOver;
+	}
+	else
 	{
-		gameOver = true;
+		const float dt = ft.Mark();
+		pauseCounter += dt;
+		if (pauseCounter >= pauseDuration)
+		{
+			pauseCounter = 0.0f;
+			pauseScreen = false;
+		}
 	}
 }
 
@@ -107,6 +190,11 @@ void Game::ComposeFrame()
 		snake.Draw(brd);
 		apple.Draw(brd);
 		walls.Draw(brd);
+
+		if (cucumber.IsExist())
+		{
+			cucumber.Draw(brd);
+		}
 	}
 }
 
