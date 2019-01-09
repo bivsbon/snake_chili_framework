@@ -30,8 +30,8 @@ Game::Game( MainWindow& wnd )
 	brd(gfx),
 	rng(rd()),
 	snake({2, 1}),
-	xDist(0, 39),
-	yDist(0, 29),
+	xDist(0, 37),
+	yDist(0, 25),
 	freqDist(20, 30),
 	nom(L"Sounds\\nom.wav"),
 	background(L"Sounds\\soundtrack.wav"),
@@ -188,6 +188,8 @@ void Game::ComposeFrame()
 	else
 	{
 		fillScreen(200, 200, 200);
+		brd.Draw(gfx);
+		//DrawScorebar();
 		snake.Draw(brd);
 		apple.Draw(brd);
 		walls.Draw(brd);
@@ -205,3 +207,7 @@ void Game::fillScreen(int r, int g, int b)
 		for (int j = 0; j < gfx.ScreenHeight; j++)
 			gfx.PutPixel(i, j, r, g, b);
 }
+//
+//void Game::DrawScoreBar(int score)
+//{
+//}

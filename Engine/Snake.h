@@ -38,7 +38,7 @@ public:
 
 private:
 	static constexpr Color snakeColor = Colors::Yellow;
-	static constexpr int nSegmentMax = 1200; // I wonder how can anyone reach this score
+	static constexpr int nSegmentMax = 500; // I wonder how can anyone reach this score
 	Segment segments[nSegmentMax];
 	int nSegments = 2;
 };
