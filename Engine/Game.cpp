@@ -29,7 +29,7 @@ Game::Game( MainWindow& wnd )
 	gfx(wnd),
 	brd(gfx),
 	rng(rd()),
-	snake({1, 1}),
+	snake({2, 1}),
 	xDist(0, 39),
 	yDist(0, 29),
 	freqDist(20, 30),
@@ -38,6 +38,7 @@ Game::Game( MainWindow& wnd )
 	dead(L"Sounds\\oof.wav"),
 	speedup(L"Sounds\\aaah.wav")
 {
+	snake.InitBody({ 1,1 }, 1);
 	apple.Init({ xDist(rng), yDist(rng) });
 	background.Play();
 }
@@ -118,7 +119,7 @@ void Game::UpdateModel()
 			snake.MoveBy(delta_loc);
 		}
 
-		// Speedup cucumber !!
+		// Spawn speedup cucumber !!
 		if (score && score == fruitPerCucumber 
 			&& prevScore != score && !cucumber.IsExist())
 		{

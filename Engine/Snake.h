@@ -12,6 +12,7 @@ private:
 	public:
 		void InitHead(const Location& loc);
 		void InitBody();
+		void InitBody(const Location& in_loc);
 		void MoveBy(const Location& delta_loc);
 		void Follow(const Segment& next);
 		void Draw(Board& brd) const;
@@ -23,6 +24,7 @@ private:
 
 public:
 	Snake(const Location& in_loc);
+	void InitBody(const Location& loc, int nSegment);
 	void MoveBy(const Location& delta_loc);
 	void Grow();
 	void Draw(Board& brd) const;
@@ -38,5 +40,5 @@ private:
 	static constexpr Color snakeColor = Colors::Yellow;
 	static constexpr int nSegmentMax = 1200; // I wonder how can anyone reach this score
 	Segment segments[nSegmentMax];
-	int nSegments = 1;
+	int nSegments = 2;
 };

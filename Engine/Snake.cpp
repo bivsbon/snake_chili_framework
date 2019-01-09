@@ -5,6 +5,11 @@ Snake::Snake(const Location & loc)
 	segments[0].InitHead(loc);
 }
 
+void Snake::InitBody(const Location & in_loc, int nSegment)
+{
+	segments[nSegment].InitBody(in_loc);
+}
+
 void Snake::MoveBy(const Location & delta_loc)
 {
 	for (int i = nSegments - 1; i > 0; --i)
@@ -121,7 +126,13 @@ void Snake::Segment::InitBody()
 	c = snakeColor;
 }
 
-void Snake::Segment::MoveBy(const Location & delta_loc)
+void Snake::Segment::InitBody(const Location & in_loc)
+{
+	loc = in_loc;
+	c = snakeColor;
+}
+
+void Snake::Segment::MoveBy(const Location& delta_loc)
 {
 	loc.Add(delta_loc);
 }

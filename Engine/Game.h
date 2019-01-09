@@ -66,7 +66,7 @@ private:
 
 	float secondPerMove = 0.15f;
 	float secondCount = 0.0f;
-	Location delta_loc = { 0, 0 };
+	Location delta_loc = { 1, 0 };
 	Location prev_delta_loc = delta_loc;
 	bool gameOver = false;
 	bool prevGameOver = false;
