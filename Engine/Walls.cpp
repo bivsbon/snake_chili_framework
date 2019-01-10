@@ -6,6 +6,11 @@ void Walls::SpawnNewWall(const Location & in_loc)
 	nWalls++;
 }
 
+void Walls::RespawnWall(const Location & in_loc)
+{
+	walls[nWalls - 1].ChangeLoc(in_loc);
+}
+
 void Walls::Draw(Board& brd) const
 {
 	for (int i = 0; i < nWalls; i++)
@@ -28,6 +33,11 @@ void Walls::Wall::InitWall(const Location& in_loc)
 {
 	loc = in_loc;
 	c = wallColor;
+}
+
+void Walls::Wall::ChangeLoc(const Location & in_loc)
+{
+	loc = in_loc;
 }
 
 void Walls::Wall::Draw(Board& brd) const

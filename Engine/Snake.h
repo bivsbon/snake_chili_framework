@@ -32,6 +32,7 @@ public:
 	bool IsEatingItself();
 	bool Eat(const Fruit& apple,const Location& delta_loc) const;
 	bool EatWalls(const Walls& wall, const Location& delta_loc) const;
+	bool WallSpawnOn(const Walls& wall) const;
 	bool EatSpeedUp(const SpeedUp& spd, const Location& delta_loc) const;
 	bool FruitSpawnOn(const Fruit& apple) const;
 	Location GetNextLocation(const Location& delta_loc) const;

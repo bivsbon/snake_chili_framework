@@ -103,6 +103,20 @@ bool Snake::EatWalls(const Walls& wall, const Location & delta_loc) const
 	return false;
 }
 
+bool Snake::WallSpawnOn(const Walls& wall) const
+{
+	for (int i = 0; i < nSegments; i++)
+	{
+		if (segments[i].GetLocation() == wall.GetLocation(wall.GetNWalls() - 1))
+		{
+			return true;
+		}
+		else
+			;
+	}
+	return false;
+}
+
 bool Snake::EatSpeedUp(const SpeedUp & spd, const Location & delta_loc) const
 {
 	if (GetNextLocation(delta_loc) == spd.GetLocation())

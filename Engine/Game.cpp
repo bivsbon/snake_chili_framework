@@ -90,6 +90,10 @@ void Game::UpdateModel()
 				{
 					walls.SpawnNewWall({ xDist(rng), yDist(rng) });
 				}
+				if (snake.WallSpawnOn(walls))
+				{
+					walls.RespawnWall({ xDist(rng), yDist(rng) }); //Respawn if walls spawn on snake
+				}
 				do
 				{ 
 					apple.Respawn({ xDist(rng), yDist(rng) });

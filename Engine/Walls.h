@@ -8,6 +8,7 @@ private:
 	{
 	public:
 		void InitWall(const Location& in_loc);
+		void ChangeLoc(const Location& in_loc);
 		void Draw(Board& brd) const;
 		Location GetLocation() const;
 	private:
@@ -17,6 +18,7 @@ private:
 
 public:
 	void SpawnNewWall(const Location& in_loc);
+	void RespawnWall(const Location& in_loc);
 	void Draw(Board& brd) const;
 	int GetNWalls() const;
 	Location GetLocation(const int index) const;
