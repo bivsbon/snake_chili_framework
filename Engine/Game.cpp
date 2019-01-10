@@ -189,7 +189,7 @@ void Game::ComposeFrame()
 	{
 		fillScreen(200, 200, 200);
 		brd.Draw(gfx);
-		//DrawScorebar();
+		DrawScoreBar(score);
 		snake.Draw(brd);
 		apple.Draw(brd);
 		walls.Draw(brd);
@@ -207,7 +207,10 @@ void Game::fillScreen(int r, int g, int b)
 		for (int j = 0; j < gfx.ScreenHeight; j++)
 			gfx.PutPixel(i, j, r, g, b);
 }
-//
-//void Game::DrawScoreBar(int score)
-//{
-//}
+
+void Game::DrawScoreBar(const int score)
+{
+	float percentage = (float)score / (float)maxScore;
+	float w = percentage * 760.0f;
+	gfx.drawRectDim(15, 15, (int)w, 30, Colors::Magenta, true);
+}

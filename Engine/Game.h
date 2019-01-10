@@ -45,7 +45,7 @@ private:
 	/********************************/
 	/*  User Functions              */
 	void fillScreen(int r, int g, int b);
-	//void DrawScoreBar(int score);
+	void DrawScoreBar(const int score);
 	/********************************/
 private:
 	MainWindow& wnd;
@@ -72,7 +72,7 @@ private:
 	bool gameOver = false;
 	bool prevGameOver = false;
 	int score = 0;
-	static constexpr int maxScore = 500;
+	static constexpr int maxScore = 200;
 	int prevScore = 0;
 	float speedUpTimer= 0.0f;
 	bool speedUpMode = false;
