@@ -216,5 +216,9 @@ void Game::DrawScoreBar(const int score)
 {
 	float percentage = (float)score / (float)maxScore;
 	float w = percentage * 760.0f;
-	gfx.drawRectDim(15, 15, (int)w, 30, Colors::Magenta, true);
+	gfx.drawRectDim(20, 20, (int)w, 30, Colors::Magenta, true);
+	//Border
+	gfx.drawRectDim(19, 19, 762, 32, Colors::Black, false);
+	gfx.drawRectDim(18, 18, 764, 34, Colors::Black, false);
+	gfx.drawRectDim(17, 17, 766, 36, Colors::Black, false);
 }

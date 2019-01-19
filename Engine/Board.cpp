@@ -7,7 +7,7 @@ Board::Board(Graphics& gfx)
 {
 }
 
-void Board::Draw(Graphics & gfx)
+void Board::Draw(Graphics & gfx) const
 {
 	int x = margin;
 	int y = gfx.ScreenHeight - margin - height * dimension;
@@ -18,7 +18,7 @@ void Board::Draw(Graphics & gfx)
 	gfx.drawRectDim(x-3, y-3, w+6, h+6, Colors::Blue, false);
 }
 
-void Board::DrawCell(const Location& loc, Color c)
+void Board::DrawCell(const Location& loc, Color c) const
 {
 	assert(loc.x >= 0);
 	assert(loc.x < width);
@@ -29,12 +29,12 @@ void Board::DrawCell(const Location& loc, Color c)
 	gfx.drawRectDim(drawLoc.x*dimension+1, drawLoc.y*dimension+1, dimension-2, dimension-2, Colors::Black, false);
 }
 
-int Board::GetWidth()
+int Board::GetWidth() const
 {
 	return width;
 }
 
-int Board::GetHeight()
+int Board::GetHeight() const
 {
 	return height;
 }

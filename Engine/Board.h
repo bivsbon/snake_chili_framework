@@ -6,10 +6,10 @@ class Board
 {
 public:
 	Board(Graphics& gfx);
-	void Draw(Graphics& gfx);
-	void DrawCell(const Location& loc, Color c);
-	int GetWidth();
-	int GetHeight();
+	void Draw(Graphics& gfx) const;
+	void DrawCell(const Location& loc, Color c) const;
+	int GetWidth() const;
+	int GetHeight() const;
 	bool IsOnBoard(const Location& loc) const;
 private:
 	static constexpr int margin = 20;
