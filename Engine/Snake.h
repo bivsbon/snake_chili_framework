@@ -3,6 +3,7 @@
 #include "Fruit.h"
 #include "Walls.h"
 #include "SpeedUp.h"
+#include <vector>
 
 class Snake
 {
@@ -10,9 +11,8 @@ private:
 	class Segment
 	{
 	public:
-		void InitHead(const Location& loc);
-		void InitBody();
-		void InitBody(const Location& in_loc);
+		Segment(Location loc, Color c);
+		Segment(Color c);
 		void MoveBy(const Location& delta_loc);
 		void Follow(const Segment& next);
 		void Draw(Board& brd) const;
@@ -24,7 +24,6 @@ private:
 
 public:
 	Snake(const Location& in_loc);
-	void InitBody(const Location& loc, int nSegment);
 	void MoveBy(const Location& delta_loc);
 	void Grow();
 	void Draw(Board& brd) const;
@@ -39,7 +38,6 @@ public:
 
 private:
 	static constexpr Color snakeColor = Colors::Yellow;
-	static constexpr int nSegmentMax = 500; // I wonder how can anyone reach this score
-	Segment segments[nSegmentMax];
+	std::vector<Segment> segments;
 	int nSegments = 2;
 };

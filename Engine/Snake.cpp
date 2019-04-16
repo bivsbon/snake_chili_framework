@@ -1,16 +1,14 @@
 #include "Snake.h"
 
-Snake::Snake(const Location & loc)
+using namespace std;
+
+Snake::Snake(const Location& loc)
 {
-	segments[0].InitHead(loc);
+	segments.emplace_back(Segment(loc, snakeColor));
+	segments.emplace_back(Segment({loc.x - 1, loc.y}, snakeColor));
 }
 
-void Snake::InitBody(const Location & in_loc, int nSegment)
-{
-	segments[nSegment].InitBody(in_loc);
-}
-
-void Snake::MoveBy(const Location & delta_loc)
+void Snake::MoveBy(const Location& delta_loc)
 {
 	for (int i = nSegments - 1; i > 0; --i)
 	{
@@ -21,11 +19,8 @@ void Snake::MoveBy(const Location & delta_loc)
 
 void Snake::Grow()
 {
-	if (nSegments < nSegmentMax)
-	{
-		segments[nSegments].InitBody();
-		nSegments++;
-	}
+	segments.emplace_back(Segment(snakeColor));
+	nSegments++;
 }
 
 void Snake::Draw(Board& brd) const
@@ -129,22 +124,16 @@ bool Snake::EatSpeedUp(const SpeedUp & spd, const Location & delta_loc) const
 	}
 }
 
-void Snake::Segment::InitHead(const Location& in_loc)
-{
-	loc = in_loc;
-	c = snakeColor;
-}
+Snake::Segment::Segment(Location loc, Color c)
+	:
+	loc(loc),
+	c(c)
+{}
 
-void Snake::Segment::InitBody()
-{
-	c = snakeColor;
-}
-
-void Snake::Segment::InitBody(const Location & in_loc)
-{
-	loc = in_loc;
-	c = snakeColor;
-}
+Snake::Segment::Segment(Color c)
+	:
+	c(c)
+{}
 
 void Snake::Segment::MoveBy(const Location& delta_loc)
 {

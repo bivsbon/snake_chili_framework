@@ -38,7 +38,6 @@ Game::Game( MainWindow& wnd )
 	dead(L"Sounds\\oof.wav"),
 	speedup(L"Sounds\\aaah.wav")
 {
-	snake.InitBody({ 1,1 }, 1);
 	apple.Init({ xDist(rng), yDist(rng) });
 	background.Play();
 }
