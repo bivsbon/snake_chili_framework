@@ -27,7 +27,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd(wnd),
 	gfx(wnd),
-	brd(gfx),
+	brd(gfx), 
 	rng(rd()),
 	snake({2, 1}),
 	xDist(0, 37),
@@ -85,14 +85,17 @@ void Game::UpdateModel()
 				}
 				snake.Grow();
 				score++;
+				// Spawn a wall at random place every 2 apples eaten
 				if (score % 2 == 0)
 				{
 					walls.SpawnNewWall({ xDist(rng), yDist(rng) });
+					// If new wall spawn on the snake, respawn until it isn't
+					if (snake.WallSpawnOn(walls))
+					{
+						walls.RespawnWall({ xDist(rng), yDist(rng) });
+					}
 				}
-				if (snake.WallSpawnOn(walls))
-				{
-					walls.RespawnWall({ xDist(rng), yDist(rng) }); //Respawn if walls spawn on snake
-				}
+				// Keep repawning apple if it spawns on snake or walls
 				do
 				{ 
 					apple.Respawn({ xDist(rng), yDist(rng) });
@@ -151,6 +154,7 @@ void Game::UpdateModel()
 
 		// Background music
 		loopSoundCounter += dt;
+		// Plays the background music repeatedly
 		if (loopSoundCounter >= soundLength)
 		{
 			background.Play();

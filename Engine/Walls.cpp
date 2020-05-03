@@ -1,8 +1,13 @@
 #include "Walls.h"
 
+Walls::Wall::Wall(const Location& in_loc)
+	:
+	loc(in_loc)
+{}
+
 void Walls::SpawnNewWall(const Location & in_loc)
 {
-	walls[nWalls].InitWall(in_loc);
+	walls.push_back(Wall(in_loc));
 	nWalls++;
 }
 
@@ -24,15 +29,14 @@ int Walls::GetNWalls() const
 	return nWalls;
 }
 
+Color Walls::GetWallColor() const
+{
+	return Wall::c;
+}
+
 Location Walls::GetLocation(const int index) const
 {
 	return walls[index].GetLocation();
-}
-
-void Walls::Wall::InitWall(const Location& in_loc)
-{
-	loc = in_loc;
-	c = wallColor;
 }
 
 void Walls::Wall::ChangeLoc(const Location & in_loc)

@@ -106,8 +106,6 @@ bool Snake::WallSpawnOn(const Walls& wall) const
 		{
 			return true;
 		}
-		else
-			;
 	}
 	return false;
 }
