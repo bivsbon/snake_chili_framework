@@ -30,6 +30,7 @@
 #include "FrameTimer.h"
 #include "Sound.h"
 #include "SpeedUp.h"
+#include "Font.h"
 
 class Game
 {
@@ -64,9 +65,10 @@ private:
 	Location delta_loc = { 1, 0 };
 	Location prev_delta_loc = delta_loc;
 	bool gameOver = false;
+	bool win = false;
 	bool prevGameOver = false;
 	int score = 0;
-	static constexpr int maxScore = 200;
+	static constexpr int maxScore = 2;
 	int prevScore = 0;
 	float speedUpTimer= 0.0f;
 	bool speedUpMode = false;
@@ -81,5 +83,7 @@ private:
 	Sound speedup;
 	float loopSoundCounter = 0.0f;
 	static constexpr float soundLength = 249.0f;
+
+	Font font;
 	/********************************/
 };

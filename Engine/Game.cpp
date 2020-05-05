@@ -23,17 +23,18 @@
 #include <random>
 #include "Snake.h"
 
-Game::Game( MainWindow& wnd )
+Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
 	gfx(wnd),
-	brd(gfx), 
+	brd(gfx),
 	rng(rd()),
 	freqDist(20, 30),
 	nom(L"Sounds\\nom.wav"),
 	background(L"Sounds\\soundtrack.wav"),
 	dead(L"Sounds\\oof.wav"),
-	speedup(L"Sounds\\aaah.wav")
+	speedup(L"Sounds\\aaah.wav"),
+	font("Fonts\\Consolas13x24.bmp", Colors::White)
 {
 	background.Play();
 }
@@ -80,7 +81,10 @@ void Game::UpdateModel()
 					nom.Play(); // Eating sound
 				}
 				brd.SnakeGrow();
-				score++;
+				if (++score == maxScore)
+				{
+					win = true;
+				}
 				// Spawn a wall at random place every 2 apples eaten
 				if (score % 2 == 0)
 				{
@@ -90,7 +94,7 @@ void Game::UpdateModel()
 				brd.SpawnNewFruit();
 			}
 
-			// Gameover scenario
+			// Gameover scenarios
 			if (brd.SnakeEatsWalls(delta_loc) || brd.SnakeIsOutside(delta_loc) || brd.SnakeEatsItself(delta_loc))
 			{
 				gameOver = true;
@@ -108,7 +112,7 @@ void Game::UpdateModel()
 				speedup.StopOne();
 				speedup.Play();
 			}
-			if (!gameOver)
+			if (!gameOver && !win)
 			{
 				brd.SnakeMoveBy(delta_loc);
 			}
@@ -143,7 +147,7 @@ void Game::UpdateModel()
 		}
 
 		// Sound effects when dead
-		if (gameOver)
+		if (gameOver || win)
 		{
 			background.StopAll();
 			speedup.StopAll();
@@ -173,11 +177,16 @@ void Game::ComposeFrame()
 	{
 		fillScreen(255, 0, 0);
 	}
+	else if (win)
+	{
+		fillScreen(0, 255, 0);
+	}
 	else
 	{
 		fillScreen(200, 200, 200);
 		brd.Draw(gfx);
 		DrawScoreBar(score);
+		font.MyDrawText("hey", {200, 200}, Colors::Black, gfx);
 	}
 }
 
