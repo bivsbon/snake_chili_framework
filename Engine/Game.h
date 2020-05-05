@@ -27,7 +27,6 @@
 #include "Snake.h"
 #include "Fruit.h"
 #include "Walls.h"
-#include <random>
 #include "FrameTimer.h"
 #include "Sound.h"
 #include "SpeedUp.h"
@@ -55,14 +54,9 @@ private:
 	FrameTimer ft;
 	std::random_device rd;
 	std::mt19937 rng;
-	std::uniform_int_distribution<int> xDist;
-	std::uniform_int_distribution<int> yDist;
 	std::uniform_int_distribution<int> freqDist;
 
 	Board brd;
-	Fruit apple;
-	Snake snake;
-	Walls walls;
 	SpeedUp cucumber;
 
 	float secondPerMove = 0.15f;

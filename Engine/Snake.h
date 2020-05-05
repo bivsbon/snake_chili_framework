@@ -1,9 +1,7 @@
 #pragma once
-#include "Board.h"
-#include "Fruit.h"
-#include "Walls.h"
-#include "SpeedUp.h"
 #include <vector>
+#include "Location.h"
+#include "Colors.h"
 
 class Snake
 {
@@ -15,29 +13,21 @@ private:
 		Segment(Color c);
 		void MoveBy(const Location& delta_loc);
 		void Follow(const Segment& next);
-		void Draw(Board& brd) const;
 		Location GetLocation() const;
 	private:
 		Location loc;
 		Color c;
 	};
-
 public:
-	Snake(const Location& in_loc);
+	Snake();
 	void MoveBy(const Location& delta_loc);
 	void Grow();
-	void Draw(Board& brd) const;
-	bool IsEatingWalls(const Board& brd) const;
-	bool IsEatingItself();
-	bool Eat(const Fruit& apple,const Location& delta_loc) const;
-	bool EatWalls(const Walls& wall, const Location& delta_loc) const;
-	bool WallSpawnOn(const Walls& wall) const;
-	bool EatSpeedUp(const SpeedUp& spd, const Location& delta_loc) const;
-	bool FruitSpawnOn(const Fruit& apple) const;
 	Location GetNextLocation(const Location& delta_loc) const;
-
+	Location Tail() const;
+	Location Head() const;
+public:
+	static constexpr Color COLOR = Colors::Yellow;
 private:
-	static constexpr Color snakeColor = Colors::Yellow;
 	std::vector<Segment> segments;
 	int nSegments = 2;
 };

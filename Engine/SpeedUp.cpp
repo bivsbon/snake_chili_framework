@@ -1,10 +1,5 @@
 #include "SpeedUp.h"
 
-void SpeedUp::Draw(Board& brd) const
-{
-	brd.DrawCell(loc, c);
-}
-
 Location SpeedUp::GetLocation() const
 {
 	return loc;
@@ -24,20 +19,6 @@ void SpeedUp::Spawn(const Location in_loc)
 bool SpeedUp::IsExist() const
 {
 	return exist;
-}
-
-bool SpeedUp::SpawnOnWalls(const Walls & wall) const
-{
-	for (int i = 0; i < wall.GetNWalls(); i++)
-	{
-		if (GetLocation() == wall.GetLocation(i))
-		{
-			return true;
-		}
-		else
-			;
-	}
-	return false;
 }
 
 void SpeedUp::Terminate()

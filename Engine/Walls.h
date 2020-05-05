@@ -1,6 +1,7 @@
 #pragma once
-#include "Board.h"
-#include "vector"
+#include <vector>
+#include "Location.h"
+#include "Colors.h"
 
 class Walls
 {
@@ -10,9 +11,7 @@ private:
 	public:
 		Wall(const Location& in_loc);
 		void ChangeLoc(const Location& in_loc);
-		void Draw(Board& brd) const;
 		Location GetLocation() const;
-		static constexpr Color c = { 100, 100, 100 }; // Grey
 	private:
 		Location loc;
 	};
@@ -20,11 +19,10 @@ private:
 public:
 	void SpawnNewWall(const Location& in_loc);
 	void RespawnWall(const Location& in_loc);
-	void Draw(Board& brd) const;
 	int GetNWalls() const;
-	Color GetWallColor() const;
 	Location GetLocation(const int index) const;
-
+public:
+	static constexpr Color COLOR = { 100, 100, 100 }; // Grey
 private:
 	int nWalls = 0;
 	std::vector<Wall> walls;

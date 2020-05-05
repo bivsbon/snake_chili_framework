@@ -29,16 +29,12 @@ Game::Game( MainWindow& wnd )
 	gfx(wnd),
 	brd(gfx), 
 	rng(rd()),
-	snake({2, 1}),
-	xDist(0, 37),
-	yDist(0, 25),
 	freqDist(20, 30),
 	nom(L"Sounds\\nom.wav"),
 	background(L"Sounds\\soundtrack.wav"),
 	dead(L"Sounds\\oof.wav"),
 	speedup(L"Sounds\\aaah.wav")
 {
-	apple.Init({ xDist(rng), yDist(rng) });
 	background.Play();
 }
 
@@ -77,40 +73,31 @@ void Game::UpdateModel()
 			prev_delta_loc = delta_loc;
 
 			// Eating apple
-			if (snake.Eat(apple, delta_loc))
+			if (brd.SnakeEatsApple(delta_loc))
 			{
 				if (!speedUpMode)
 				{
 					nom.Play(); // Eating sound
 				}
-				snake.Grow();
+				brd.SnakeGrow();
 				score++;
 				// Spawn a wall at random place every 2 apples eaten
 				if (score % 2 == 0)
 				{
-					walls.SpawnNewWall({ xDist(rng), yDist(rng) });
-					// If new wall spawn on the snake, respawn until it isn't
-					if (snake.WallSpawnOn(walls))
-					{
-						walls.RespawnWall({ xDist(rng), yDist(rng) });
-					}
+					brd.SpawnNewWall();
 				}
 				// Keep repawning apple if it spawns on snake or walls
-				do
-				{ 
-					apple.Respawn({ xDist(rng), yDist(rng) });
-				} while (snake.FruitSpawnOn(apple) || apple.SpawnOnWalls(walls) 
-					  || apple.GetLocation() == cucumber.GetLocation()); // Respawn if overlaps with other things
+				brd.SpawnNewFruit();
 			}
 
-			// Going out the border -> dead
-			if (snake.EatWalls(walls, delta_loc))
+			// Gameover scenario
+			if (brd.SnakeEatsWalls(delta_loc) || brd.SnakeIsOutside(delta_loc))
 			{
 				gameOver = true;
 			}
 
 			// Eating cucumber
-			if (snake.EatSpeedUp(cucumber, delta_loc))
+			if (brd.SnakeEatSpeedUp(delta_loc))
 			{
 				cucumber.Terminate();
 				secondPerMove = 0.07f;
@@ -122,15 +109,14 @@ void Game::UpdateModel()
 				speedup.Play();
 			}
 
-			snake.MoveBy(delta_loc);
+			brd.SnakeMoveBy(delta_loc);
 		}
 
 		// Spawn speedup cucumber !!
-		if (score && score == fruitPerCucumber 
-			&& prevScore != score && !cucumber.IsExist())
+		if (score && score == fruitPerCucumber && prevScore != score && !cucumber.IsExist())
 		{
 			fruitPerCucumber = freqDist(rng) + score;
-			cucumber.Spawn({ xDist(rng), yDist(rng) });
+			brd.SpawnSpeedUp();
 		}
 		if (speedUpMode)
 		{
@@ -145,13 +131,6 @@ void Game::UpdateModel()
 		}
 		prevScore = score;
 
-		// Gameover scenarios
-		if (snake.IsEatingWalls(brd) || 
-			snake.IsEatingItself())
-		{
-			gameOver = true;
-		}
-
 		// Background music
 		loopSoundCounter += dt;
 		// Plays the background music repeatedly
@@ -162,7 +141,7 @@ void Game::UpdateModel()
 		}
 
 		// Sound effects when dead
-		if (gameOver == true)
+		if (gameOver)
 		{
 			background.StopAll();
 			speedup.StopAll();
@@ -197,14 +176,6 @@ void Game::ComposeFrame()
 		fillScreen(200, 200, 200);
 		brd.Draw(gfx);
 		DrawScoreBar(score);
-		snake.Draw(brd);
-		apple.Draw(brd);
-		walls.Draw(brd);
-
-		if (cucumber.IsExist())
-		{
-			cucumber.Draw(brd);
-		}
 	}
 }
 

@@ -1,17 +1,15 @@
 #pragma once
-#include "Board.h"
-#include "Walls.h"
-#include "SpeedUp.h"
+#include "Location.h"
+#include "Colors.h"
 
 class Fruit
 {
 public:
-	void Init(const Location& in_loc);
-	void Respawn(const Location& loc);
-	void Draw(Board& brd) const;
+	Fruit(const Location& in_loc);
+	void Spawn(const Location& loc);
 	Location GetLocation() const;
-	bool SpawnOnWalls(const Walls& wall) const;
+public:
+	static constexpr Color COLOR = Colors::Red;
 private:
 	Location loc;
-	static constexpr Color c = Colors::Red;
 };
