@@ -22,6 +22,7 @@
 #include "Game.h"
 #include <random>
 #include "Snake.h"
+#include <string> // to_string()
 
 Game::Game(MainWindow& wnd)
 	:
@@ -185,8 +186,8 @@ void Game::ComposeFrame()
 	{
 		fillScreen(200, 200, 200);
 		brd.Draw(gfx);
-		DrawScoreBar(score);
-		font.MyDrawText("hey", {200, 200}, Colors::Black, gfx);
+		DrawScoreBar();
+		DrawScoreText();
 	}
 }
 
@@ -197,13 +198,25 @@ void Game::fillScreen(int r, int g, int b)
 			gfx.PutPixel(i, j, r, g, b);
 }
 
-void Game::DrawScoreBar(const int score)
+void Game::DrawScoreBar()
 {
 	float percentage = (float)score / (float)maxScore;
 	float w = percentage * 760.0f;
+	// Score progress
 	gfx.drawRectDim(20, 20, (int)w, 30, Colors::Magenta, true);
 	//Border
 	gfx.drawRectDim(19, 19, 762, 32, Colors::Black, false);
 	gfx.drawRectDim(18, 18, 764, 34, Colors::Black, false);
 	gfx.drawRectDim(17, 17, 766, 36, Colors::Black, false);
+}
+
+void Game::DrawScoreText()
+{
+	std::string scoreText = std::to_string(score);
+	std::string maxScoreText = std::to_string(maxScore);
+	const int l = (int)scoreText.length() + (int)maxScoreText.length() + 1;
+	const int total = l * font.getGlyphWidth();
+
+	const int posX = (Graphics::ScreenWidth - total) / 2;
+	font.MyDrawText(scoreText + "/" + maxScoreText, { posX, 23 }, Colors::Black, gfx);
 }
