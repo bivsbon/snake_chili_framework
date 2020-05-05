@@ -128,14 +128,14 @@ bool Board::SnakeEatSpeedUp(const Location & delta_loc) const
 
 bool Board::SnakeIsOutside(const Location& delta_loc) const
 {
-	return IsOnBoard(snake.GetNextLocation(delta_loc));
+	return !IsOnBoard(snake.GetNextLocation(delta_loc));
 }
 
 bool Board::SnakeEatsItself(const Location & delta_loc) const
 {
 	auto nextLoc = snake.GetNextLocation(delta_loc);
 	int x = nextLoc.x, y = nextLoc.y;
-	return cells[x][y] != CellTypes::SnakeSeg;
+	return cells[x][y] == CellTypes::SnakeSeg;
 }
 
 void Board::SpawnNewWall()

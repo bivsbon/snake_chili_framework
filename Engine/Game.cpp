@@ -91,7 +91,7 @@ void Game::UpdateModel()
 			}
 
 			// Gameover scenario
-			if (brd.SnakeEatsWalls(delta_loc) || brd.SnakeIsOutside(delta_loc))
+			if (brd.SnakeEatsWalls(delta_loc) || brd.SnakeIsOutside(delta_loc) || brd.SnakeEatsItself(delta_loc))
 			{
 				gameOver = true;
 			}
@@ -108,8 +108,10 @@ void Game::UpdateModel()
 				speedup.StopOne();
 				speedup.Play();
 			}
-
-			brd.SnakeMoveBy(delta_loc);
+			if (!gameOver)
+			{
+				brd.SnakeMoveBy(delta_loc);
+			}
 		}
 
 		// Spawn speedup cucumber !!
