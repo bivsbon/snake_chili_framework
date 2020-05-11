@@ -47,6 +47,11 @@ int Font::getGlyphWidth() const
 	return glyphWidth;
 }
 
+int Font::getGlyphHeight() const
+{
+	return glyphHeight;
+}
+
 RectI Font::MapGlyphRect(char c) const
 {
 	assert(c >= firstChar && c <= lastChar);

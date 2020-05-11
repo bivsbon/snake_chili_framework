@@ -34,6 +34,7 @@ public:
 	bool SnakeEatsItself(const Location& delta_loc) const;
 	void SpawnNewWall();
 	void SpawnNewFruit();
+	void TerminateCucumber();
 	void SpawnSpeedUp();
 	void SnakeGrow();
 	void SnakeMoveBy(const Location& delta_loc);

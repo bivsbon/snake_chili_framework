@@ -109,6 +109,27 @@ public:
 			}
 		}
 	}
+	void Drawbox(int x, int y, int width, int height, int border, Color color, Color borderColor, bool fill)
+	{
+		assert(border > 0);
+		assert(width > border * 2);
+		assert(height > border * 2);
+
+		for (int i = 0; i < border; ++i)
+		{
+			drawRectDim(x + i, y + i, width - i * 2, height - i * 2, borderColor, false);
+		}
+		if (fill)
+		{
+			drawRectDim(x + border, y + border, width - border * 2, height - border * 2, color, true);
+		}
+	}
+	void FillScreen(int r, int g, int b)
+	{
+		for (int i = 0; i < ScreenWidth; i++)
+			for (int j = 0; j < ScreenHeight; j++)
+				PutPixel(i, j, r, g, b);
+	}
 	~Graphics();
 	RectI Graphics::GetScreenRect()
 	{

@@ -23,19 +23,12 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
-#include "Board.h"
-#include "Snake.h"
-#include "Fruit.h"
-#include "Walls.h"
-#include "FrameTimer.h"
-#include "Sound.h"
-#include "SpeedUp.h"
-#include "Font.h"
+#include "GameScreen.h"
 
 class Game
 {
 public:
-	Game( class MainWindow& wnd );
+	Game( class MainWindow& wnd);
 	Game( const Game& ) = delete;
 	Game& operator=( const Game& ) = delete;
 	void Go();
@@ -44,7 +37,6 @@ private:
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
-	void fillScreen(int r, int g, int b);
 	void DrawScoreBar();
 	void DrawScoreText();
 	/********************************/
@@ -53,38 +45,6 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
-	FrameTimer ft;
-	std::random_device rd;
-	std::mt19937 rng;
-	std::uniform_int_distribution<int> freqDist;
-
-	Board brd;
-	SpeedUp cucumber;
-
-	float secondPerMove = 0.15f;
-	float secondCount = 0.0f;
-	Location delta_loc = { 1, 0 };
-	Location prev_delta_loc = delta_loc;
-	bool gameOver = false;
-	bool win = false;
-	bool prevGameOver = false;
-	int score = 8;
-	static constexpr int maxScore = 15;
-	int prevScore = 0;
-	float speedUpTimer= 0.0f;
-	bool speedUpMode = false;
-	bool pauseScreen = false;
-	int fruitPerCucumber = 5;
-	float pauseCounter = 0.0f;
-	static constexpr float pauseDuration = 3.25f;
-
-	Sound nom;
-	Sound background;
-	Sound dead;
-	Sound speedup;
-	float loopSoundCounter = 0.0f;
-	static constexpr float soundLength = 249.0f;
-
-	Font font;
+	GameScreen* screen_;
 	/********************************/
 };

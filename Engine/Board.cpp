@@ -164,6 +164,12 @@ void Board::SpawnNewFruit()
 	cells[x][y] = CellTypes::Apple;
 }
 
+void Board::TerminateCucumber()
+{
+	cells[cucumber.GetLocation().x][cucumber.GetLocation().y] = CellTypes::Air;
+	cucumber.Terminate();
+}
+
 void Board::SpawnSpeedUp()
 {
 	int x, y;

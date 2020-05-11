@@ -10,6 +10,7 @@ public:
 	Font(const std::string& filename, Color chroma = Colors::White);
 	void MyDrawText(const std::string& text, const Vei2& pos, Color color, Graphics& gfx) const;
 	int getGlyphWidth() const;
+	int getGlyphHeight() const;
 private:
 	RectI MapGlyphRect(char c) const;
 private:
