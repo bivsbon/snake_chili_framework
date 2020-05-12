@@ -37,9 +37,8 @@ PlayingScreen::PlayingScreen(Graphics& gfx)
 	brd(gfx),
 	rng(rd()),
 	freqDist(20, 30),
-	nom(L"Sounds\\nom.wav"),
 	background(L"Sounds\\soundtrack.wav"),
-	dead(L"Sounds\\oof.wav"),
+	nom(L"Sounds\\nom.wav"),
 	speedup(L"Sounds\\aaah.wav"),
 	font("Fonts\\Consolas13x24.bmp", Colors::White)
 {
@@ -49,7 +48,7 @@ PlayingScreen::PlayingScreen(Graphics& gfx)
 GameScreen* PlayingScreen::Update(MainWindow& wnd)
 {
 	const float dt = ft.Mark();
-	if (!pauseScreen)
+	if (!speedingUp)
 	{
 		// Keyboard input
 		if (wnd.kbd.KeyIsPressed(VK_UP))
@@ -61,7 +60,7 @@ GameScreen* PlayingScreen::Update(MainWindow& wnd)
 		if (wnd.kbd.KeyIsPressed(VK_RIGHT))
 			delta_loc = { 1,  0 };
 		if (wnd.kbd.KeyIsPressed(VK_RETURN))
-			pauseScreen = !pauseScreen;
+			speedingUp = !speedingUp;
 
 		// Adjust the frame rate
 		secondCount += dt;
@@ -80,7 +79,7 @@ GameScreen* PlayingScreen::Update(MainWindow& wnd)
 				if (++score == maxScore)
 				{
 					background.StopAll();
-					speedup.StopAll();
+					//speedup.StopAll();
 					return new WinningScreen(gfx);
 				}
 				if (!speedUpMode)
@@ -102,7 +101,6 @@ GameScreen* PlayingScreen::Update(MainWindow& wnd)
 			{
 				background.StopAll();
 				speedup.StopAll();
-				dead.Play();
 				return new LosingScreen(gfx);
 			}
 
@@ -113,7 +111,7 @@ GameScreen* PlayingScreen::Update(MainWindow& wnd)
 				secondPerMove = 0.07f;
 				speedUpTimer = 0.0f;
 				speedUpMode = true;
-				pauseScreen = true;
+				speedingUp = true;
 				background.StopAll();
 				speedup.StopOne();
 				speedup.Play();
@@ -155,7 +153,7 @@ GameScreen* PlayingScreen::Update(MainWindow& wnd)
 		if (pauseCounter >= pauseDuration)
 		{
 			pauseCounter = 0.0f;
-			pauseScreen = false;
+			speedingUp = false;
 		}
 	}
 
@@ -195,18 +193,35 @@ void PlayingScreen::DrawScoreText()
 
 LosingScreen::LosingScreen(Graphics& gfx)
 	:
-	GameScreen(gfx)
+	GameScreen(gfx),
+	dead(L"Sounds\\oof.wav"),
+	font("Fonts\\Consolas13x24.bmp", Colors::White),
+	tryAgainButton({ 300, 225 }, 200, 150, font, "TRY AGAIN")
 {
+	dead.Play();
 }
 
-GameScreen* LosingScreen::Update(MainWindow & wnd)
+GameScreen* LosingScreen::Update(MainWindow& wnd)
 {
+	if (wnd.kbd.KeyIsPressed(VK_ESCAPE))
+	{
+		return new MenuScreen(gfx);
+	}
+	if (tryAgainButton.mouseHoverOn(wnd.mouse.GetPos()))
+	{
+		if (wnd.mouse.LeftIsPressed())
+		{
+			return new PlayingScreen(gfx);
+		}
+	}
+
 	return this;
 }
 
 void LosingScreen::Draw()
 {
 	gfx.FillScreen(255, 0, 0);
+	tryAgainButton.Draw(gfx);
 }
 
 WinningScreen::WinningScreen(Graphics& gfx)
@@ -217,6 +232,10 @@ WinningScreen::WinningScreen(Graphics& gfx)
 
 GameScreen* WinningScreen::Update(MainWindow & wnd)
 {
+	if (wnd.kbd.KeyIsPressed(VK_ESCAPE))
+	{
+		return new MenuScreen(gfx);
+	}
 	return this;
 }
 

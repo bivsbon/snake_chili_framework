@@ -11,13 +11,12 @@
 #include "Font.h"
 #include "Button.h"
 
-
 class GameScreen
 {
 public:
 	GameScreen(Graphics& gfx);
 	GameScreen() = default;
-	//virtual ~GameScreen() = 0;
+	virtual ~GameScreen() = default;
 	virtual GameScreen* Update(MainWindow& wnd) = 0;
 	virtual void Draw() = 0;
 protected:
@@ -28,7 +27,6 @@ class MenuScreen : public GameScreen
 {
 public:
 	MenuScreen(Graphics& gfx);
-	//~MenuScreen();
 	GameScreen* Update(MainWindow& wnd);
 	void Draw();
 private:
@@ -40,7 +38,6 @@ class PlayingScreen : public GameScreen
 {
 public:
 	PlayingScreen(Graphics& gfx);
-	//~PlayingScreen();
 	GameScreen* Update(MainWindow& wnd);
 	void Draw();
 private:
@@ -64,14 +61,13 @@ private:
 	int prevScore = 0;
 	float speedUpTimer = 0.0f;
 	bool speedUpMode = false;
-	bool pauseScreen = false;
+	bool speedingUp = false;
 	int fruitPerCucumber = 5;
 	float pauseCounter = 0.0f;
 	static constexpr float pauseDuration = 3.25f;
 
-	Sound nom;
 	Sound background;
-	Sound dead;
+	Sound nom;
 	Sound speedup;
 	float loopSoundCounter = 0.0f;
 	static constexpr float soundLength = 249.0f;
@@ -83,16 +79,18 @@ class LosingScreen : public GameScreen
 {
 public:
 	LosingScreen(Graphics& gfx);
-	//~LosingScreen();
 	GameScreen* Update(MainWindow& wnd);
 	void Draw();
+private:
+	Sound dead;
+	Font font;
+	Button tryAgainButton;
 };
 
 class WinningScreen : public GameScreen
 {
 public:
 	WinningScreen(Graphics& gfx);
-	//~WinningScreen();
 	GameScreen* Update(MainWindow& wnd);
 	void Draw();
 };
