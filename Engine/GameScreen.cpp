@@ -10,8 +10,7 @@ MenuScreen::MenuScreen(Graphics& gfx)
 	GameScreen(gfx),
 	font("Fonts\\Consolas13x24.bmp", Colors::White),
 	startButton({ 300, 225 }, 200, 150, font, "START")
-{
-}
+{}
 
 GameScreen* MenuScreen::Update(MainWindow& wnd)
 {
@@ -227,8 +226,7 @@ void LosingScreen::Draw()
 WinningScreen::WinningScreen(Graphics& gfx)
 	:
 	GameScreen(gfx)
-{
-}
+{}
 
 GameScreen* WinningScreen::Update(MainWindow & wnd)
 {

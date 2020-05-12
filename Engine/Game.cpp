@@ -29,6 +29,11 @@ Game::Game(MainWindow& wnd)
 	screen_ = new MenuScreen(gfx);
 }
 
+Game::~Game()
+{
+	delete screen_;
+}
+
 void Game::Go()
 {
 	gfx.BeginFrame();
