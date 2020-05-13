@@ -57,7 +57,7 @@ private:
 	Location delta_loc = { 1, 0 };
 	Location prev_delta_loc = delta_loc;
 	int score = 0;
-	static constexpr int maxScore = 5;
+	static constexpr int maxScore = 100;
 	int prevScore = 0;
 	float speedUpTimer = 0.0f;
 	bool speedUpMode = false;
