@@ -57,7 +57,7 @@ private:
 	Location delta_loc = { 1, 0 };
 	Location prev_delta_loc = delta_loc;
 	int score = 0;
-	static constexpr int maxScore = 100;
+	static constexpr int maxScore = 5;
 	int prevScore = 0;
 	float speedUpTimer = 0.0f;
 	bool speedUpMode = false;
@@ -93,4 +93,7 @@ public:
 	WinningScreen(Graphics& gfx);
 	GameScreen* Update(MainWindow& wnd);
 	void Draw();
+private:
+	Font font;
+	Button tryAgainButton;
 };

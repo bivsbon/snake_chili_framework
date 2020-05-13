@@ -225,7 +225,9 @@ void LosingScreen::Draw()
 
 WinningScreen::WinningScreen(Graphics& gfx)
 	:
-	GameScreen(gfx)
+	GameScreen(gfx),
+	font("Fonts\\Consolas13x24.bmp", Colors::White),
+	tryAgainButton({ 300, 225 }, 200, 150, font, "TRY AGAIN")
 {}
 
 GameScreen* WinningScreen::Update(MainWindow & wnd)
@@ -234,10 +236,18 @@ GameScreen* WinningScreen::Update(MainWindow & wnd)
 	{
 		return new MenuScreen(gfx);
 	}
+	if (tryAgainButton.mouseHoverOn(wnd.mouse.GetPos()))
+	{
+		if (wnd.mouse.LeftIsPressed())
+		{
+			return new PlayingScreen(gfx);
+		}
+	}
 	return this;
 }
 
 void WinningScreen::Draw()
 {
 	gfx.FillScreen(0, 255, 0);
+	tryAgainButton.Draw(gfx);
 }
